@@ -35,6 +35,7 @@
         }
 
         /* Responsive Sidebar: Hide on mobile, show as full width navigation bar */
+        /* THIS MEDIA QUERY ENSURES MOBILE COMPATIBILITY */
         @media (max-width: 768px) {
             .portfolio-container {
                 flex-direction: column;
@@ -47,7 +48,7 @@
                 width: 100%;
                 height: 4rem; /* Standard height for nav bar */
                 flex-direction: row;
-                justify-content: space-around;
+                justify-content: start; /* Use start for consistent left-alignment on mobile */
                 align-items: center;
                 z-index: 50;
                 border-radius: 0;
@@ -55,15 +56,22 @@
                 overflow-x: auto; /* Allow horizontal scrolling if necessary */
                 white-space: nowrap;
             }
+            /* Hide non-essential titles/divs in the mobile nav bar */
+            .sidebar .text-2xl, .sidebar .text-sm {
+                display: none;
+            }
             .nav-link {
-                margin: 0 0.25rem;
+                margin: 0 0.5rem;
                 padding: 0.5rem 1rem;
                 flex-shrink: 0; /* Prevent shrinking */
+                /* Give buttons minimum width for easy tapping */
+                min-width: fit-content; 
             }
             .content-area {
                 padding-top: 4rem; /* Push content down below the fixed nav bar */
             }
         }
+        /* END MOBILE CSS ADJUSTMENTS */
 
         /* Styling for image captions in Activity 4 */
         .image-caption {
@@ -166,8 +174,7 @@
                                 Course Submission Details
                             </h3>
                             <p class="text-gray-700"><strong>Course:</strong> Clean and Green Energy</p>
-                            <p class="text-gray-700"><strong>Assignment:</strong> Website Portfolio Submission (Total: 15 Marks)</p>
-                            <p class="text-sm text-gray-500">Deadline: 29th Oct 2025</p>
+                            <p class="text-gray-700"><strong>Assignment:</strong> Website Portfolio Submission</p>
                         </div>
 
                         <div class="space-y-4 pt-4">
@@ -410,7 +417,11 @@
                                         <p class="image-caption">Fig 4. Feature Importance for Geothermal Suitability.</p>
                                     </div>
                                     <div class="flex flex-col items-center">
-                                        <img src="3D_geothermal_visualization.jpeg" alt="3D Geothermal Potential Visualization" class="w-full h-auto rounded-lg shadow-md border">
+                                        <!-- Removed: <img src="3D_geothermal_visualization.jpeg" alt="3D Geothermal Potential Visualization" class="w-full h-auto rounded-lg shadow-md border"> -->
+                                        <!-- Removed the image corresponding to the selected code, but kept the caption for reference -->
+                                        <div class="w-full h-auto rounded-lg shadow-md border bg-gray-200 flex items-center justify-center p-8">
+                                            <p class="text-gray-600 italic text-sm">3D Visualization Image Removed per Request</p>
+                                        </div>
                                         <p class="image-caption">Fig 5. 3D Geothermal Potential Visualization (Temp, Heat Flow, Pressure).</p>
                                     </div>
                                 </div>
@@ -434,7 +445,7 @@
                                     <div class="flex flex-col items-center p-2 bg-gray-900 text-green-400 rounded-lg">
                                         <p class="text-xs text-white my-1">ML Model Output Snippet</p>
                                         <!-- START: Added image for ML Model Output Snippet -->
-                                        <img src="output.jpeg" alt="Wave Energy ML Model Mean Absolute Error and R-squared" class="w-full h-auto rounded-md">
+                                        <img src="WhatsApp Image 2025-11-02 at 23.06.08 (2).jpeg" alt="Wave Energy ML Model Mean Absolute Error and R-squared" class="w-full h-auto rounded-md">
                                         <!-- END: Added image for ML Model Output Snippet -->
                                     </div>
                                     <div class="flex flex-col items-center p-2 bg-gray-900 text-green-400 rounded-lg">
@@ -462,13 +473,13 @@
                                 </div>
                                 <div class="flex flex-col items-center p-2 bg-gray-900 text-green-400 rounded-lg max-w-xl mx-auto">
                                     <p class="text-xs text-white my-1">ML Model Output Snippet</p>
-                                    <img src="snippet.jpeg" alt="Biomass Energy ML Model Mean Absolute Error and R-squared" class="w-full h-auto rounded-md">
+                                    <img src="output.jpeg" alt="Biomass Energy ML Model Mean Absolute Error and R-squared" class="w-full h-auto rounded-md">
                                 </div>
                                 <p class="text-gray-700 text-sm">
                                     The biomass feature importance (Fig 8) shows that the chemical composition of the feedstock is key, with **Ash Percentage**, **Fixed Carbon**, and **Heating Value** having the highest impact on predicted efficiency. The scatter plot (Fig 9) demonstrates a good correlation between predicted and actual efficiency (close to the red y=x line), with an <span class="whitespace-nowrap">**R<sup>2</sup> Score**</span> of **0.843** and an MAE of **3.57**. A sample prediction shows a **60.00%** efficiency.
                                 </p>
                             </div>
-                        </div>  
+                        </div>
 
                     </section>
                 </div>
@@ -523,6 +534,15 @@
                 button.addEventListener('click', () => {
                     const activityId = button.getAttribute('data-activity');
                     showActivity(activityId);
+                    
+                    // On mobile, scroll to the top of the main content area when switching pages
+                    if (window.innerWidth <= 768) {
+                        const mainContent = document.querySelector('.content-area');
+                        if (mainContent) {
+                             // Scroll to the top of the page (below the fixed nav bar)
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }
+                    }
                 });
             });
 
